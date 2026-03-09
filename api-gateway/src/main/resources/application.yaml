@@ -9,10 +9,14 @@ spring:
       server:
         webmvc:
           routes[0]:
-            id: users-status-check
-            uri: lb://demo-resource-server
-            predicates[0]: Path=/users/status/check
-            predicates[1]: Method=GET
+            id: note-service
+            uri: lb://note-service
+            predicates[0]: Path=/api/notes/**
+            filters[0]: RemoveRequestHeader=Cookie
+          routes[1]:
+            id: user-service
+            uri: lb://user-service
+            predicates[0]: Path=/api/users/**
             filters[0]: RemoveRequestHeader=Cookie
 
 eureka:
